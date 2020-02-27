@@ -13,7 +13,6 @@ package mg.studio.myapplication;
 /**
  * This class sets the URL to connect to the server
  *
- * Todo: https should de used instead of http
  */
 
 
