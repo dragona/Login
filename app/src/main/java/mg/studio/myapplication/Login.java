@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -93,9 +95,10 @@ public class Login extends AppCompatActivity {
     }
 
     /**
-     *  Process the user input and log in if credentials are correct
-     *  Disable the button while login is processing
-     *  @param view from activity_login.xml
+     * Process the user input and log in if credentials are correct
+     * Disable the button while login is processing
+     *
+     * @param view from activity_login.xml
      */
     public void btnLogin(View view) {
 
@@ -118,7 +121,7 @@ public class Login extends AppCompatActivity {
 
             //Todo: need to check weather the user has Internet before attempting checking the data
             // Start fetching the data from the Internet
-            new OnlineCredentialValidation().execute(email,password);
+            new OnlineCredentialValidation().execute(email, password);
 
 
         } else {
@@ -141,12 +144,9 @@ public class Login extends AppCompatActivity {
     }
 
 
-
     /**
      * Use the email and password provided to log the user in if the credentials are valid
-     *
      */
-
 
 
     class OnlineCredentialValidation extends AsyncTask<String, Void, Integer> {
@@ -165,7 +165,7 @@ public class Login extends AppCompatActivity {
             final String EMAIL = "email";
             final String PASSWORD = "password";
             final String PARAMS = EMAIL + "=" + strings[0] + "&" + PASSWORD + "=" + strings[1];
-            Log.d("TAG","Email and Pass - "+EMAIL + "=" + strings[0] + "&" + PASSWORD + "=" + strings[1]);
+            Log.d("TAG", "Email and Pass - " + EMAIL + "=" + strings[0] + "&" + PASSWORD + "=" + strings[1]);
 
             URL url = null;
             HttpURLConnection connection = null;
@@ -215,8 +215,6 @@ public class Login extends AppCompatActivity {
         }
 
 
-
-
         @Override
         protected void onPostExecute(Integer mFeedback) {
             super.onPostExecute(mFeedback);
@@ -263,6 +261,7 @@ public class Login extends AppCompatActivity {
 
     /**
      * Parsing the string response from the Server
+     *
      * @param response
      * @return
      */

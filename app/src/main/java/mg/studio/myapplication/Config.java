@@ -12,16 +12,15 @@ package mg.studio.myapplication;
 
 /**
  * This class sets the URL to connect to the server
- *
  */
 
 
 public class Config {
     //Login
-    public String URL_LOGIN = "https://mpianatra.com/Courses/api/login.php";
+    public String URL_LOGIN = "https://studio.mg/student/api-login-android/login.php";
 
     //Register
-    public String URL_REGISTER = "https://mpianatra.com/Courses/api/register.php";
+    public String URL_REGISTER = "https://studio.mg/student/api-login-android/register.php";
 
     public String getLoginUrl() {
         return URL_LOGIN;

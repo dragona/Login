@@ -14,21 +14,20 @@ import android.os.Parcelable;
  */
 
 
-
-class Feedback implements Parcelable{
+class Feedback implements Parcelable {
 
     private String name;
     private String error_message;
     public final int SUCCESS = 1;
     public final int FAIL = 0;
 
-    Feedback(){ }
+    Feedback() {
+    }
 
     protected Feedback(Parcel in) {
         name = in.readString();
         error_message = in.readString();
     }
-
 
 
     @Override
@@ -53,7 +52,6 @@ class Feedback implements Parcelable{
             return new Feedback[size];
         }
     };
-
 
 
     //Getters and Setters

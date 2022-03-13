@@ -2,15 +2,15 @@ package mg.studio.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvName;
     private SessionManager session;
-
-
 
 
     @Override
@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tvName = findViewById(R.id.user_name);
-
-
 
 
         /**
