@@ -9,6 +9,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.1335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12487335359675786" />
+        <entry key="app/src/main/res/layout/register.xml" value="0.25677083333333334" />
       </map>
     </option>
   </component>
