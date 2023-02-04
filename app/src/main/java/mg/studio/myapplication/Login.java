@@ -27,14 +27,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 /**
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * TODO:
+ *         [x] 1- task one
+ *         [] 2- task one
+ *         [] 3- task one
  */
 
 
@@ -127,7 +125,7 @@ public class Login extends AppCompatActivity {
         } else {
             // Prompt user to enter credentials
             Toast.makeText(getApplicationContext(),
-                    R.string.enter_credentials, Toast.LENGTH_LONG)
+                            R.string.enter_credentials, Toast.LENGTH_LONG)
                     .show();
         }
     }
@@ -260,23 +258,18 @@ public class Login extends AppCompatActivity {
 
 
     /**
-     * Parsing the string response from the Server
+     * This class parses the response from the server into a JSON object.
+     * If the registration on the server was successful, the response from the server should be
+     * {"error":false}.
+     * Else, an error message object is added. For example: {"error":true,"error_msg":"Invalid email format."}
+     * Success of the registration can be checked based on the "error" object, where true refers to the existence of an error.
      *
-     * @param response
-     * @return
+     * @param response - the response from the server as a string
+     * @return feedback.SUCCESS if the response is {"error":false} and feedback.FAIL otherwise
      */
     public int parsingResponse(String response) {
-
         try {
             JSONObject jObj = new JSONObject(response);
-            /**
-             * If the registration on the server was successful the return should be
-             * {"error":false}
-             * Else, an object for error message is added
-             * Example: {"error":true,"error_msg":"Invalid email format."}
-             * Success of the registration can be checked based on the
-             * object error, where true refers to the existence of an error
-             */
             boolean error = jObj.getBoolean("error");
 
             if (!error) {
@@ -296,6 +289,6 @@ public class Login extends AppCompatActivity {
             feedback.setError_message(e.toString());
             return feedback.FAIL;
         }
-
     }
+
 }

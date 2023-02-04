@@ -28,88 +28,84 @@ import java.net.URL;
 
 
 /**
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Register activity for a user to sign up.
  */
-
-
 public class Register extends AppCompatActivity {
-    private static final String TAG = Register.class.getSimpleName();
-    private Button btnRegister;
-    private Button btnLinkToLogin;
-    private EditText inputFullName;
-    private EditText inputEmail;
-    private EditText inputPassword;
-    private SessionManager session;
-    private ProgressDialog pDialog;
-    private String name;
-    Feedback feedback;
+    private static final String TAG = Register.class.getSimpleName(); // Tag for logging purposes
+    private Button btnRegister; // Register button
+    private Button btnLinkToLogin; // Link to login screen button
+    private EditText inputFullName; // Input field for full name
+    private EditText inputEmail; // Input field for email
+    private EditText inputPassword; // Input field for password
+    private SessionManager session; // Session manager for keeping track of user login status
+    private ProgressDialog pDialog; // Progress dialog for registering the user
+    private String name; // Name of the user
+    Feedback feedback; // Feedback for the result of registration
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        // Initializing input fields
         inputFullName = findViewById(R.id.name);
         inputEmail = findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
+
+        // Initializing buttons
         btnRegister = findViewById(R.id.btnRegister);
         btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
-
-        // Preparing the Progress dialog
+        // Initializing progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-
-        // Session manager
+        // Initializing session manager
         session = new SessionManager(getApplicationContext());
-        // Check if user is already logged in or not
+
+        // Check if user is already logged in
         if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
+            // If the user is already logged in, go to the MainActivity
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
 
-        // Register Button Click event
+        // Set onClickListener for Register button
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                // Getting input values from the input fields
                 name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
+                // Check if all the fields are filled
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    // Avoid repeated clicks by disabling the button
+                    // Disable the register button to avoid repeated clicks
                     btnRegister.setClickable(false);
-                    //Register the user
+                    // Register the user
                     registerUser(name, email, password);
-
-
                 } else {
+                    // If the fields are not filled, display a toast message
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                                    "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
                 }
             }
         });
 
-        // Link to Login Screen
+        // Set onClickListener for Link to Login Screen button
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        Login.class);
+                // Go to the Login activity
+                Intent i = new Intent(getApplicationContext(), Login.class);
                 startActivity(i);
                 finish();
             }
         });
-
     }
+
+
+    // The following Java code is a commented version of the original Android code
 
     /**
      * Register a new user to the server database
@@ -121,64 +117,65 @@ public class Register extends AppCompatActivity {
     private void registerUser(final String name, final String email,
                               final String password) {
 
+        // Display a progress dialog with message "Registering ..."
         pDialog.setMessage("Registering ...");
         if (!pDialog.isShowing()) pDialog.show();
-        //Todo: Need to check Internet connection
-        new DownloadData().execute(name, email, password);
 
+        // Todo: Need to check Internet connection
+        // Start a background task to register the user
+        new DownloadData().execute(name, email, password);
 
     }
 
-
+    // AsyncTask class to handle background processing for registering the user
     class DownloadData extends AsyncTask<String, Void, Integer> {
-
 
         @Override
         protected Integer doInBackground(String... strings) {
+            // Initialize feedback object
             feedback = new Feedback();
 
+            // Initialize variables
             String response = null;
             OutputStreamWriter request = null;
             int parsingFeedback = feedback.FAIL;
 
-
-            // Variables
-            final String BASE_URL = new Config().getRegisterUrl();
+            final String BASE_URL = new Config().getRegisterUrl(); // URL to register the user
             final String NAME = "name";
             final String EMAIL = "email";
             final String PASSWORD = "password";
             final String PARAMS = NAME + "=" + strings[0] + "&" + EMAIL + "=" + strings[1] + "&" + PASSWORD + "=" + strings[2];
 
-
+            // Initialize URL and HTTP connection objects
             URL url = null;
             HttpURLConnection connection = null;
             try {
+                // Open a connection to the URL
                 url = new URL(BASE_URL);
                 connection = (HttpURLConnection) url.openConnection();
-                //Set the request method to POST
+
+                // Set the request method to POST and add request properties
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
 
-                // Timeout for reading InputStream arbitrarily set to 3000ms.
+                // Set timeouts for reading InputStream and connecting
                 connection.setReadTimeout(9000);
-                // Timeout for connection.connect() arbitrarily set to 3000ms.
                 connection.setConnectTimeout(9000);
 
-                // Output the stream to the server
+                // Output the parameters to the server
                 request = new OutputStreamWriter(connection.getOutputStream());
                 request.write(PARAMS);
                 request.flush();
                 request.close();
 
-                // Get the inputStream using the same connection
+                // Read the input stream from the connection
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 response = readStream(inputStream, 500);
                 inputStream.close();
 
-                // Parsing the response
+                // Parse the response
                 parsingFeedback = parsingResponse(response);
-
 
             } catch (MalformedURLException e) {
                 Log.e("TAG", "URL - " + e);
@@ -189,8 +186,8 @@ public class Register extends AppCompatActivity {
                 feedback.setError_message(e.toString());
                 return feedback.FAIL;
             } finally {
-                if (connection != null) // Make sure the connection is not null before disconnecting
-                    connection.disconnect();
+                // Disconnect the connection and log the response
+                if (connection != null) connection.disconnect();
                 Log.d("TAG", "Response " + response);
 
                 return parsingFeedback;

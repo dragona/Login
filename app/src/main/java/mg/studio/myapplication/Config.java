@@ -1,31 +1,31 @@
 package mg.studio.myapplication;
 
 /**
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-/**
  * This class sets the URL to connect to the server
  */
-
-
 public class Config {
-    //Login
+    /**
+     * URL for login
+     */
     public String URL_LOGIN = "https://studio.mg/student/api-login-android/login.php";
 
-    //Register
+    /**
+     * URL for register
+     */
     public String URL_REGISTER = "https://studio.mg/student/api-login-android/register.php";
 
+    /**
+     * Gets the login URL
+     * @return the login URL
+     */
     public String getLoginUrl() {
         return URL_LOGIN;
     }
 
+    /**
+     * Gets the register URL
+     * @return the register URL
+     */
     public String getRegisterUrl() {
         return URL_REGISTER;
     }

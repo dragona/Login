@@ -5,16 +5,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * SessionManager class is used to manage user session.
+ * It uses SharedPreferences to store session information.
  */
-
-
 public class SessionManager {
 
     // LogCat tag
@@ -34,12 +27,20 @@ public class SessionManager {
 
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 
+    /**
+     * Constructor for SessionManager class.
+     * @param context Context of the calling activity.
+     */
     public SessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
 
+    /**
+     * This method sets the user login session.
+     * @param isLoggedIn Boolean indicating whether the user is logged in or not.
+     */
     public void setLogin(boolean isLoggedIn) {
 
         editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
@@ -48,9 +49,11 @@ public class SessionManager {
         Log.d(TAG, "User login session modified!");
     }
 
+    /**
+     * This method returns the user login session.
+     * @return Boolean indicating whether the user is logged in or not.
+     */
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
     }
 }
-
-
